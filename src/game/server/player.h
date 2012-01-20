@@ -21,6 +21,7 @@ public:
 	void TryRespawn();
 	void Respawn();
 	void SetTeam(int Team, bool DoChatMsg=true);
+	void SetTeamDirect(int Team);
 	int GetTeam() const { return m_Team; };
 	int GetCID() const { return m_ClientID; };
 
@@ -85,6 +86,9 @@ public:
 		int m_TargetY;
 	} m_LatestActivity;
 
+	int m_SpecExplicit;
+	int m_TempTeam;
+	
 	// network latency calculations
 	struct
 	{

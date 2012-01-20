@@ -21,12 +21,26 @@ CPlayer::CPlayer(CGameContext *pGameServer, int ClientID, int Team)
 	m_SpectatorID = SPEC_FREEVIEW;
 	m_LastActionTick = Server()->Tick();
 	m_TeamChangeTick = Server()->Tick();
+	
+	m_SpecExplicit = 0;
+	m_TempTeam = -1;
 }
 
 CPlayer::~CPlayer()
 {
 	delete m_pCharacter;
 	m_pCharacter = 0;
+}
+
+void CPlayer::SetTeamDirect(int Team)
+{
+	if(Team == -1)
+		m_SpecExplicit = 1;
+	else
+		m_SpecExplicit = 0;
+		
+	m_TempTeam = m_Team;
+	m_Team = Team;
 }
 
 void CPlayer::Tick()
@@ -274,6 +288,7 @@ void CPlayer::SetTeam(int Team, bool DoChatMsg)
 			if(GameServer()->m_apPlayers[i] && GameServer()->m_apPlayers[i]->m_SpectatorID == m_ClientID)
 				GameServer()->m_apPlayers[i]->m_SpectatorID = SPEC_FREEVIEW;
 		}
+		m_SpecExplicit = 0;
 	}
 }
 

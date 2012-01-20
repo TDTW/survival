@@ -73,17 +73,15 @@ public:
 
 	void DoWarmup(int Seconds);
 
-	void StartRound();
-	void EndRound();
 	void ChangeMap(const char *pToMap);
 
 	bool IsFriendlyFire(int ClientID1, int ClientID2);
 
 	bool IsForceBalanced();
+	
+	virtual void StartRound();
+	void EndRound();
 
-	/*
-
-	*/
 	virtual bool CanBeMovedOnBalance(int ClientID);
 
 	virtual void Tick();

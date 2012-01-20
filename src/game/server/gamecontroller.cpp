@@ -17,7 +17,7 @@ IGameController::IGameController(class CGameContext *pGameServer)
 	m_pGameType = "unknown";
 
 	//
-	DoWarmup(g_Config.m_SvWarmup);
+	DoWarmup(2);
 	m_GameOverTick = -1;
 	m_SuddenDeath = 0;
 	m_RoundStartTick = Server()->Tick();
@@ -422,7 +422,7 @@ void IGameController::Tick()
 	if(m_GameOverTick != -1)
 	{
 		// game over.. wait for restart
-		if(Server()->Tick() > m_GameOverTick+Server()->TickSpeed()*10)
+		if(Server()->Tick() > m_GameOverTick+Server()->TickSpeed()*3)
 		{
 			CycleMap();
 			StartRound();
@@ -536,7 +536,7 @@ void IGameController::Tick()
 			}
 		}
 	}
-
+	
 	DoWincheck();
 }
 

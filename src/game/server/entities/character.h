@@ -55,6 +55,9 @@ public:
 
 	bool IncreaseHealth(int Amount);
 	bool IncreaseArmor(int Amount);
+	
+	int GetHealth() const {return m_Health; }
+	int GetArmor() const {return m_Armor; }
 
 	bool GiveWeapon(int Weapon, int Ammo);
 	void GiveNinja();
