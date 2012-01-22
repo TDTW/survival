@@ -16,21 +16,32 @@ CGameControllerSURVTDM::CGameControllerSURVTDM(class CGameContext *pGameServer) 
 void CGameControllerSURVTDM::OnCharacterSpawn(class CCharacter *pChr)
 {
 	// default health
-	pChr->IncreaseHealth(10);
-	pChr->IncreaseArmor(5);
+	pChr->IncreaseHealth(g_Config.m_SvGiveHealth);
+	pChr->IncreaseArmor(g_Config.m_SvGiveArmor);
 
 	// give default weapons
-	pChr->GiveWeapon(WEAPON_HAMMER, -1);
-	pChr->GiveWeapon(WEAPON_GUN, 10);
-	pChr->GiveWeapon(WEAPON_SHOTGUN, 8);
-	pChr->GiveWeapon(WEAPON_GRENADE, 8);
-	pChr->GiveWeapon(WEAPON_RIFLE, 4);
+	if(g_Config.m_SvGiveWeaponHammer)
+		pChr->GiveWeapon(WEAPON_HAMMER, -1);
+		
+	if(g_Config.m_SvGiveWeaponGun)
+		pChr->GiveWeapon(WEAPON_GUN, 10);
+	
+	if(g_Config.m_SvGiveWeaponShotgun)
+		pChr->GiveWeapon(WEAPON_SHOTGUN, g_Config.m_SvGiveWeaponShotgun);
+		
+	if(g_Config.m_SvGiveWeaponGrenade)
+		pChr->GiveWeapon(WEAPON_GRENADE, g_Config.m_SvGiveWeaponGrenade);
+	
+	if(g_Config.m_SvGiveWeaponLaser)
+		pChr->GiveWeapon(WEAPON_RIFLE, g_Config.m_SvGiveWeaponLaser);
 }
 
 bool CGameControllerSURVTDM::OnEntity(int Index, vec2 Pos)
 {
-	if((Index == ENTITY_ARMOR_1) || (Index == ENTITY_HEALTH_1) || (Index == ENTITY_WEAPON_SHOTGUN) || 
-	(Index == ENTITY_WEAPON_GRENADE) || (Index == ENTITY_WEAPON_RIFLE) || (Index == ENTITY_POWERUP_NINJA))
+	if(((Index == ENTITY_ARMOR_1) || (Index == ENTITY_HEALTH_1)) && g_Config.m_SvHidePickUps)
+		return true;
+		
+	if(((Index == ENTITY_WEAPON_SHOTGUN) || (Index == ENTITY_WEAPON_GRENADE) || (Index == ENTITY_WEAPON_RIFLE) || (Index == ENTITY_POWERUP_NINJA)) && g_Config.m_SvHideWeapons)
 		return true;
 	
 	if(IGameController::OnEntity(Index, Pos))
@@ -61,9 +72,14 @@ void CGameControllerSURVTDM::Snap(int SnappingClient)
 	pGameDataObj->m_FlagCarrierBlue = 0;
 }
 
-void CGameControllerSURVTDM::PostReset()
+void CGameControllerSURVTDM::PostReset(bool ClearScore)
 {
-
+	if(g_Config.m_SvScorelimit > 0 && (m_aTeamscore[TEAM_RED] >= g_Config.m_SvScorelimit || m_aTeamscore[TEAM_BLUE] >= g_Config.m_SvScorelimit))
+	{
+		m_aTeamscore[TEAM_RED] = 0;
+		m_aTeamscore[TEAM_BLUE] = 0;
+		IGameController::PostReset();
+	}
 }
 
 void CGameControllerSURVTDM::StartRound()
@@ -74,8 +90,6 @@ void CGameControllerSURVTDM::StartRound()
 	m_SuddenDeath = 0;
 	m_GameOverTick = -1;
 	GameServer()->m_World.m_Paused = false;
-	//m_aTeamscore[TEAM_RED] = 0;
-	//m_aTeamscore[TEAM_BLUE] = 0;
 	m_ForceBalanced = false;
 	Server()->DemoRecorder_HandleAutoStart();
 	char aBuf[256];

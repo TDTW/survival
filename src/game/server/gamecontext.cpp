@@ -535,10 +535,16 @@ void CGameContext::OnClientEnter(int ClientID)
 {
 	//world.insert_entity(&players[client_id]);
 	//m_apPlayers[ClientID]->Respawn();
+	
+				
 	char aBuf[512];
 	str_format(aBuf, sizeof(aBuf), "'%s' entered and joined the %s", Server()->ClientName(ClientID), m_pController->GetTeamName(m_apPlayers[ClientID]->GetTeam()));
 	SendChat(-1, CGameContext::CHAT_ALL, aBuf);
 
+	SendChatTarget(ClientID, "Welcome to Surv Mod 0.2!");
+	SendChatTarget(ClientID, "Server coded by Psycho.God!");
+	SendChatTarget(ClientID, "Good luck! Have fun!");
+	
 	str_format(aBuf, sizeof(aBuf), "team_join player='%d:%s' team=%d", ClientID, Server()->ClientName(ClientID), m_apPlayers[ClientID]->GetTeam());
 	Console()->Print(IConsole::OUTPUT_LEVEL_DEBUG, "game", aBuf);
 
@@ -1062,7 +1068,10 @@ void CGameContext::ConRestart(IConsole::IResult *pResult, void *pUserData)
 	if(pResult->NumArguments())
 		pSelf->m_pController->DoWarmup(pResult->GetInteger(0));
 	else
+	{
+		pSelf->m_pController->PostReset(true);
 		pSelf->m_pController->StartRound();
+	}
 }
 
 void CGameContext::ConBroadcast(IConsole::IResult *pResult, void *pUserData)

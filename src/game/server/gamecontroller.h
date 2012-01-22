@@ -139,7 +139,7 @@ public:
 	bool CanChangeTeam(CPlayer *pPplayer, int JoinTeam);
 	int ClampTeam(int Team);
 
-	virtual void PostReset();
+	virtual void PostReset(bool ClearScore = 0);
 };
 
 #endif

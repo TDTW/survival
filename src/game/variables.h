@@ -83,6 +83,20 @@ MACRO_CONFIG_INT(SvVoteKick, sv_vote_kick, 1, 0, 1, CFGFLAG_SERVER, "Allow votin
 MACRO_CONFIG_INT(SvVoteKickMin, sv_vote_kick_min, 0, 0, MAX_CLIENTS, CFGFLAG_SERVER, "Minimum number of players required to start a kick vote")
 MACRO_CONFIG_INT(SvVoteKickBantime, sv_vote_kick_bantime, 5, 0, 1440, CFGFLAG_SERVER, "The time to ban a player if kicked by vote. 0 makes it just use kick")
 
+// Survival
+MACRO_CONFIG_INT(SvGiveHealth, sv_givehealth, 10, 0, 10, CFGFLAG_SERVER, "How much hearts will give at start")
+MACRO_CONFIG_INT(SvGiveArmor, sv_givearmor, 5, 0, 10, CFGFLAG_SERVER, "How much armors will give at start")
+MACRO_CONFIG_INT(SvGiveWeaponHammer, sv_giveweapon_hammer, 1, 0, 1, CFGFLAG_SERVER, "1-with hammer/0-without")
+MACRO_CONFIG_INT(SvGiveWeaponGun, sv_giveweapon_Gun, 1, 0, 1, CFGFLAG_SERVER, "1-with gun/0-without")
+MACRO_CONFIG_INT(SvGiveWeaponShotgun, sv_giveweapon_shotgun, 8, -1, 10, CFGFLAG_SERVER, "How much shotgun bullets will give at start (-1 infinite)")
+MACRO_CONFIG_INT(SvGiveWeaponGrenade, sv_giveweapon_grenade, 8, -1, 10, CFGFLAG_SERVER, "How much grenade bullets will give at start (-1 infinite)")
+MACRO_CONFIG_INT(SvGiveWeaponLaser, sv_giveweapon_laser, 4, -1, 10, CFGFLAG_SERVER, "How much laser bullets will give at start (-1 infinite)")
+
+MACRO_CONFIG_INT(SvHideWeapons, sv_hideweapons, 1, 0, 1, CFGFLAG_SERVER, "1-hide weapons/0-not")
+MACRO_CONFIG_INT(SvHidePickUps, sv_hidepickups, 1, 0, 1, CFGFLAG_SERVER, "1-hide hearts and armors/0-not")
+
+//MACRO_CONFIG_INT(SvJoinWhileRound, sv_join_whileround, 1, 0, 1, CFGFLAG_SERVER, "1-you can join while other play/0-not") #TODO
+
 // debug
 #ifdef CONF_DEBUG // this one can crash the server if not used correctly
 	MACRO_CONFIG_INT(DbgDummies, dbg_dummies, 0, 0, 15, CFGFLAG_SERVER, "")

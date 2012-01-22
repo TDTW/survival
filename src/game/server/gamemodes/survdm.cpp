@@ -114,9 +114,23 @@ void CGameControllerSURVDM::DoWincheck()
 	IGameController::DoWincheck(); //do also usual wincheck
 }
 
-void CGameControllerSURVDM::PostReset()
+void CGameControllerSURVDM::PostReset(bool ClearScore)
 {
-
+	int Topscore = 0;
+	for(int i = 0; i < MAX_CLIENTS; i++)
+	{
+		if(GameServer()->m_apPlayers[i])
+		{
+			if(GameServer()->m_apPlayers[i]->m_Score > Topscore)
+			{
+				Topscore = GameServer()->m_apPlayers[i]->m_Score;
+			}
+		}
+	}
+	if(ClearScore || (g_Config.m_SvScorelimit > 0 && Topscore >= g_Config.m_SvScorelimit))
+	{
+		IGameController::PostReset();
+	}
 }
 
 void CGameControllerSURVDM::StartRound()
@@ -127,8 +141,6 @@ void CGameControllerSURVDM::StartRound()
 	m_SuddenDeath = 0;
 	m_GameOverTick = -1;
 	GameServer()->m_World.m_Paused = false;
-	//m_aTeamscore[TEAM_RED] = 0;
-	//m_aTeamscore[TEAM_BLUE] = 0;
 	m_ForceBalanced = false;
 	Server()->DemoRecorder_HandleAutoStart();
 	char aBuf[256];

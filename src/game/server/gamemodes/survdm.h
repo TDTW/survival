@@ -13,6 +13,6 @@ public:
 	virtual int OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon);
 	virtual void StartRound();
 	virtual void DoWincheck();
-	virtual void PostReset();
+	virtual void PostReset(bool ClearScore = 0);
 };
 #endif

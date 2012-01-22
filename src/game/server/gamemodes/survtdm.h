@@ -14,6 +14,6 @@ public:
 	virtual void StartRound();
 	virtual void DoWincheck();
 	virtual void Snap(int SnappingClient);
-	virtual void PostReset();
+	virtual void PostReset(bool ClearScore = 0);
 };
 #endif

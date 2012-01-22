@@ -262,6 +262,7 @@ void CPlayer::SetTeam(int Team, bool DoChatMsg)
 	if(m_Team == Team)
 		return;
 
+		
 	char aBuf[512];
 	if(DoChatMsg)
 	{
@@ -272,6 +273,8 @@ void CPlayer::SetTeam(int Team, bool DoChatMsg)
 	KillCharacter();
 
 	m_Team = Team;
+	if(m_Team != -1)	
+		m_TempTeam = m_Team;
 	m_LastActionTick = Server()->Tick();
 	// we got to wait 0.5 secs before respawning
 	m_RespawnTick = Server()->Tick()+Server()->TickSpeed()/2;
