@@ -92,6 +92,8 @@ MACRO_CONFIG_INT(SvGiveWeaponShotgun, sv_giveweapon_shotgun, 8, -1, 10, CFGFLAG_
 MACRO_CONFIG_INT(SvGiveWeaponGrenade, sv_giveweapon_grenade, 8, -1, 10, CFGFLAG_SERVER, "How much grenade bullets will give at start (-1 infinite)")
 MACRO_CONFIG_INT(SvGiveWeaponLaser, sv_giveweapon_laser, 4, -1, 10, CFGFLAG_SERVER, "How much laser bullets will give at start (-1 infinite)")
 
+MACRO_CONFIG_INT(SvRespawnPickups, sv_respawn_pickups, 1, 0, 1, CFGFLAG_SERVER, "1-pickups respawn while round/0-don't")
+MACRO_CONFIG_INT(SvRespawnWeapons, sv_respawn_weapons, 1, 0, 1, CFGFLAG_SERVER, "1-weapons respawn while round/0-don't")
 MACRO_CONFIG_INT(SvHideWeapons, sv_hideweapons, 1, 0, 1, CFGFLAG_SERVER, "1-hide weapons/0-not")
 MACRO_CONFIG_INT(SvHidePickUps, sv_hidepickups, 1, 0, 1, CFGFLAG_SERVER, "1-hide hearts and armors/0-not")
 
