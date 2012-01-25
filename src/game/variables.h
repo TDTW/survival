@@ -87,7 +87,7 @@ MACRO_CONFIG_INT(SvVoteKickBantime, sv_vote_kick_bantime, 5, 0, 1440, CFGFLAG_SE
 MACRO_CONFIG_INT(SvGiveHealth, sv_givehealth, 10, 0, 10, CFGFLAG_SERVER, "How much hearts will give at start")
 MACRO_CONFIG_INT(SvGiveArmor, sv_givearmor, 5, 0, 10, CFGFLAG_SERVER, "How much armors will give at start")
 MACRO_CONFIG_INT(SvGiveWeaponHammer, sv_giveweapon_hammer, 1, 0, 1, CFGFLAG_SERVER, "1-with hammer/0-without")
-MACRO_CONFIG_INT(SvGiveWeaponGun, sv_giveweapon_Gun, 1, 0, 1, CFGFLAG_SERVER, "1-with gun/0-without")
+MACRO_CONFIG_INT(SvGiveWeaponGun, sv_giveweapon_gun, 1, 0, 1, CFGFLAG_SERVER, "1-with gun/0-without")
 MACRO_CONFIG_INT(SvGiveWeaponShotgun, sv_giveweapon_shotgun, 8, -1, 10, CFGFLAG_SERVER, "How much shotgun bullets will give at start (-1 infinite)")
 MACRO_CONFIG_INT(SvGiveWeaponGrenade, sv_giveweapon_grenade, 8, -1, 10, CFGFLAG_SERVER, "How much grenade bullets will give at start (-1 infinite)")
 MACRO_CONFIG_INT(SvGiveWeaponLaser, sv_giveweapon_laser, 4, -1, 10, CFGFLAG_SERVER, "How much laser bullets will give at start (-1 infinite)")
