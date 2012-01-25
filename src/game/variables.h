@@ -97,8 +97,6 @@ MACRO_CONFIG_INT(SvRespawnWeapons, sv_respawn_weapons, 1, 0, 1, CFGFLAG_SERVER, 
 MACRO_CONFIG_INT(SvHideWeapons, sv_hideweapons, 1, 0, 1, CFGFLAG_SERVER, "1-hide weapons/0-not")
 MACRO_CONFIG_INT(SvHidePickUps, sv_hidepickups, 1, 0, 1, CFGFLAG_SERVER, "1-hide hearts and armors/0-not")
 
-//MACRO_CONFIG_INT(SvJoinWhileRound, sv_join_whileround, 1, 0, 1, CFGFLAG_SERVER, "1-you can join while other play/0-not") #TODO
-
 // debug
 #ifdef CONF_DEBUG // this one can crash the server if not used correctly
 	MACRO_CONFIG_INT(DbgDummies, dbg_dummies, 0, 0, 15, CFGFLAG_SERVER, "")

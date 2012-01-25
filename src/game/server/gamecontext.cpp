@@ -541,7 +541,7 @@ void CGameContext::OnClientEnter(int ClientID)
 	str_format(aBuf, sizeof(aBuf), "'%s' entered and joined the %s", Server()->ClientName(ClientID), m_pController->GetTeamName(m_apPlayers[ClientID]->GetTeam()));
 	SendChat(-1, CGameContext::CHAT_ALL, aBuf);
 
-	SendChatTarget(ClientID, "Welcome to Surv Mod 0.2!");
+	SendChatTarget(ClientID, "Welcome to Surv Mod 0.3!");
 	SendChatTarget(ClientID, "Server coded by Psycho.God!");
 	SendChatTarget(ClientID, "Good luck! Have fun!");
 	
@@ -836,6 +836,10 @@ void CGameContext::OnMessage(int MsgID, CUnpacker *pUnpacker, int ClientID)
 					pPlayer->SetTeam(pMsg->m_Team);
 					(void)m_pController->CheckTeamBalance();
 					pPlayer->m_TeamChangeTick = Server()->Tick();
+				}
+				else
+				{
+					SendBroadcast("You can't join while round not ended!", ClientID);
 				}
 			}
 			else
