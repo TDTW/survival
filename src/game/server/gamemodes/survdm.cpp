@@ -16,8 +16,10 @@ CGameControllerSURVDM::CGameControllerSURVDM(class CGameContext *pGameServer)
 
 bool CGameControllerSURVDM::OnEntity(int Index, vec2 Pos)
 {
-	if((Index == ENTITY_ARMOR_1) || (Index == ENTITY_HEALTH_1) || (Index == ENTITY_WEAPON_SHOTGUN) || 
-	(Index == ENTITY_WEAPON_GRENADE) || (Index == ENTITY_WEAPON_RIFLE) || (Index == ENTITY_POWERUP_NINJA))
+	if(((Index == ENTITY_ARMOR_1) || (Index == ENTITY_HEALTH_1)) && g_Config.m_SvHidePickUps)
+		return true;
+		
+	if(((Index == ENTITY_WEAPON_SHOTGUN) || (Index == ENTITY_WEAPON_GRENADE) || (Index == ENTITY_WEAPON_RIFLE) || (Index == ENTITY_POWERUP_NINJA)) && g_Config.m_SvHideWeapons)
 		return true;
 	
 	if(IGameController::OnEntity(Index, Pos))
@@ -28,15 +30,24 @@ bool CGameControllerSURVDM::OnEntity(int Index, vec2 Pos)
 void CGameControllerSURVDM::OnCharacterSpawn(class CCharacter *pChr)
 {
 	// default health
-	pChr->IncreaseHealth(10);
-	pChr->IncreaseArmor(5);
+	pChr->IncreaseHealth(g_Config.m_SvGiveHealth);
+	pChr->IncreaseArmor(g_Config.m_SvGiveArmor);
 
 	// give default weapons
-	pChr->GiveWeapon(WEAPON_HAMMER, -1);
-	pChr->GiveWeapon(WEAPON_GUN, 10);
-	pChr->GiveWeapon(WEAPON_SHOTGUN, 8);
-	pChr->GiveWeapon(WEAPON_GRENADE, 8);
-	pChr->GiveWeapon(WEAPON_RIFLE, 4);
+	if(g_Config.m_SvGiveWeaponHammer)
+		pChr->GiveWeapon(WEAPON_HAMMER, -1);
+		
+	if(g_Config.m_SvGiveWeaponGun)
+		pChr->GiveWeapon(WEAPON_GUN, 10);
+	
+	if(g_Config.m_SvGiveWeaponShotgun)
+		pChr->GiveWeapon(WEAPON_SHOTGUN, g_Config.m_SvGiveWeaponShotgun);
+		
+	if(g_Config.m_SvGiveWeaponGrenade)
+		pChr->GiveWeapon(WEAPON_GRENADE, g_Config.m_SvGiveWeaponGrenade);
+	
+	if(g_Config.m_SvGiveWeaponLaser)
+		pChr->GiveWeapon(WEAPON_RIFLE, g_Config.m_SvGiveWeaponLaser);
 }
 
 int CGameControllerSURVDM::OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon)
