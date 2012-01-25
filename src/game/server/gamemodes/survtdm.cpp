@@ -122,15 +122,6 @@ void CGameControllerSURVTDM::DoWincheck()
 		}
 	}
 	
-/* 	for(int i = 0; i < MAX_CLIENTS; i++)
-	{
-		if(GameServer()->m_apPlayers[i])
-		{
-			if((AllPlayers == 1) && (GameServer()->m_apPlayers[i]->m_SpecExplicit == 1))
-				GameServer()->m_apPlayers[i]->m_SpecExplicit = 0;
-		}
-	} */
-
 	if(((Players_SpecRedExplicit != 0) || (Players_SpecBlueExplicit != 0)) && (PlayersBlue == 0) && (PlayersRed == 0))
 	{	
 		for(int i = 0; i < MAX_CLIENTS; i++)
@@ -176,8 +167,28 @@ void CGameControllerSURVTDM::DoWincheck()
 		m_aTeamscore[Winner] += 1;
 		char Buf2[256];
 		str_format(Buf2, sizeof(Buf2), "%s win with %d health and %d armor!", GetTeamName(Winner), TempHealth, TempArmor );
-		GameServer()->SendChat(-1, CGameContext::CHAT_ALL, Buf2);		
+		GameServer()->SendChat(-1, CGameContext::CHAT_ALL, Buf2);	
+
 		return;
+	}
+	
+	if(m_GameOverTick == -1 && !m_Warmup && !GameServer()->m_World.m_ResetRequested)
+	{
+		// check score win condition
+		if((g_Config.m_SvScorelimit > 0 && (m_aTeamscore[TEAM_RED] >= g_Config.m_SvScorelimit || m_aTeamscore[TEAM_BLUE] >= g_Config.m_SvScorelimit)) ||
+			(g_Config.m_SvTimelimit > 0 && (Server()->Tick()-m_RoundStartTick) >= g_Config.m_SvTimelimit*Server()->TickSpeed()*60))
+		{	
+			for(int i = 0; i < MAX_CLIENTS; i++)
+			{
+				if(GameServer()->m_apPlayers[i])
+				{				
+					if(GameServer()->m_apPlayers[i]->m_SpecExplicit == 1)
+						GameServer()->m_apPlayers[i]->SetTeamDirect(GameServer()->m_apPlayers[i]->m_TempTeam);			
+				}
+			}
+			EndRound();
+			GameServer()->SendChat(-1, CGameContext::CHAT_ALL, "DRAW!");			
+		}
 	}
 	
 	IGameController::DoWincheck(); //do also usual wincheck

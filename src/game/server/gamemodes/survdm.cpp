@@ -110,6 +110,25 @@ void CGameControllerSURVDM::DoWincheck()
 		GameServer()->SendChat(-1, CGameContext::CHAT_ALL, Buf2);		
 		return;
 	}
+		
+	if(m_GameOverTick == -1 && !m_Warmup && !GameServer()->m_World.m_ResetRequested)
+	{
+		// check score win condition
+		if((g_Config.m_SvScorelimit > 0 && (m_aTeamscore[TEAM_RED] >= g_Config.m_SvScorelimit || m_aTeamscore[TEAM_BLUE] >= g_Config.m_SvScorelimit)) ||
+			(g_Config.m_SvTimelimit > 0 && (Server()->Tick()-m_RoundStartTick) >= g_Config.m_SvTimelimit*Server()->TickSpeed()*60))
+		{	
+			for(int i = 0; i < MAX_CLIENTS; i++)
+			{
+				if(GameServer()->m_apPlayers[i])
+				{				
+					if(GameServer()->m_apPlayers[i]->m_SpecExplicit == 1)
+						GameServer()->m_apPlayers[i]->SetTeamDirect(GameServer()->m_apPlayers[i]->m_TempTeam);			
+				}
+			}
+			EndRound();
+			GameServer()->SendChat(-1, CGameContext::CHAT_ALL, "DRAW!");			
+		}
+	}
 	
 	IGameController::DoWincheck(); //do also usual wincheck
 }
